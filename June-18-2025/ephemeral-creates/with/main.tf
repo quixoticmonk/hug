@@ -11,8 +11,13 @@ ephemeral "aws_secretsmanager_random_password" "name" {
   
 }
 
+
+resource "random_string" "rs" {
+  length = 4
+  special = false
+}
 resource "aws_secretsmanager_secret" "db_password" {
-  name = "db_password_2"
+  name = "db_password_${random_string.rs.result}"
 }
 
 resource "aws_secretsmanager_secret_version" "db_password" {
@@ -22,9 +27,9 @@ resource "aws_secretsmanager_secret_version" "db_password" {
 }
 
 
-# locals {
-#   db_password = ephemeral.random_password.db_password.result
-# }
+locals {
+  db_password = ephemeral.random_password.db_password.result
+}
 
 # output "secret_string" {
 #   value = local.db_password

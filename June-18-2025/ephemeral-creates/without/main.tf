@@ -3,13 +3,18 @@ resource "random_password" "db_password" {
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
+resource "random_string" "rs" {
+  length = 4
+  special = false
+}
+
 # output "name" {
 #   value = random_password.db_password.result
 #   sensitive = true
 # }
 
 # resource "aws_secretsmanager_secret" "db_password" {
-#   name = "db_password_1"
+#   name = "db_password_${random_string.rs.result}"
 # }
 
 # resource "aws_secretsmanager_secret_version" "db_password" {

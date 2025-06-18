@@ -3,8 +3,12 @@ ephemeral "random_password" "db_password" {
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
+resource "random_string" "rs" {
+  length = 4
+  special = false
+}
 resource "aws_secretsmanager_secret" "db_password" {
-  name = "db_password_3"
+  name = "db_password_${random_string.rs.result}"
 }
 
 resource "aws_secretsmanager_secret_version" "db_password" {
